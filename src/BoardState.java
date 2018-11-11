@@ -5,12 +5,10 @@ import java.util.List;
  * Created by lizah on 11/11/2018.
  */
 public class BoardState {
-    enum Operators {
-        Up, Down, Left, Right;
-    }
+
 
     private int n;
-    private Operators operation;
+    private CommonEnumerations.Operators operation;
     private BoardState parent;
     private int[][] stateArr;
     private int parentRowIndexZero = -1;
@@ -18,7 +16,7 @@ public class BoardState {
     private int rowIndexZero = -1;
     private int colIndexZero = -1;
 
-    public BoardState(BoardState parent, int N, Operators op, int[][] stateArr) {
+    public BoardState(BoardState parent, int N, CommonEnumerations.Operators op, int[][] stateArr) {
 
         this.parent = parent;
         this.stateArr = new int[N][N];
@@ -108,11 +106,11 @@ public class BoardState {
         }
     }
 
-    public Operators getOperation() {
+    public CommonEnumerations.Operators getOperation() {
         return operation;
     }
 
-    public void setOperation(Operators operation) {
+    public void setOperation(CommonEnumerations.Operators operation) {
         this.operation = operation;
     }
 
@@ -133,20 +131,37 @@ public class BoardState {
     }
 
 
-    public List<Operators> getValidSuccessorsOperations() {
-        List<Operators> validOperators = new LinkedList<>();
+    public List<CommonEnumerations.Operators> getValidSuccessorsOperations() {
+        List<CommonEnumerations.Operators> validOperators = new LinkedList<>();
         if (this.rowIndexZero > 0) {
-            validOperators.add(Operators.Up);
+            validOperators.add(CommonEnumerations.Operators.Up);
         }
         if (this.rowIndexZero < n - 1) {
-            validOperators.add(Operators.Down);
+            validOperators.add(CommonEnumerations.Operators.Down);
         }
         if (this.colIndexZero > 0) {
-            validOperators.add(Operators.Left);
+            validOperators.add(CommonEnumerations.Operators.Left);
         }
         if (this.colIndexZero <  n - 1 ) {
-            validOperators.add(Operators.Right);
+            validOperators.add(CommonEnumerations.Operators.Right);
         }
         return  validOperators;
+    }
+    public boolean isGoal() {
+        boolean isGoal = true;
+        int counter = 1;
+        for (int i = 0; i < this.n; i++) {
+            for (int j = 0; j < this.n; j++) {
+                if (this.stateArr[i][j] != counter && i != this.n -1 && j!= this.n -1) {
+                    isGoal = false;
+                    break;
+                }
+             counter++;
+            }
+        }
+        if (this.rowIndexZero!= n-1 || this.colIndexZero!=n-1) {
+            isGoal = false;
+        }
+        return isGoal;
     }
 }
