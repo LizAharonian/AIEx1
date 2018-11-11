@@ -4,4 +4,7 @@
 public interface IAlgo {
 
     public void operateAlgo(BoardState root);
+    public String getPath();
+    public int getNumOfClosedListMembers();
+    public int getSpacificCharacteristic();
 }

@@ -31,12 +31,16 @@ public class BoardState {
 
     }
 
+    public int getSize() {
+        return this.n;
+    }
+
     private void initializeCenter() {
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
                 if (stateArr[i][j] == 0) {
                     this.rowIndexZero = i;
-                    this.rowIndexZero = j;
+                    this.colIndexZero = j;
                 }
             }
         }
@@ -99,7 +103,7 @@ public class BoardState {
     }
 
     private void right() {
-        if (parentRowIndexZero < n - 1) {
+        if (parentColIndexZero < n - 1) {
             int temp = this.stateArr[parentRowIndexZero][parentColIndexZero + 1];
             this.stateArr[parentRowIndexZero][parentColIndexZero + 1] = 0;
             this.stateArr[parentRowIndexZero][parentColIndexZero] = temp;
@@ -163,5 +167,31 @@ public class BoardState {
             isGoal = false;
         }
         return isGoal;
+    }
+
+    public boolean isEqual(BoardState other) {
+        boolean isEqual = true;
+        for (int i = 0; i < this.n; i ++) {
+            for (int j = 0; j < this.n; j ++) {
+                if (this.stateArr[i][j] != other.getStateArr()[i][j]) {
+                    isEqual = false;
+                    break;
+                }
+            }
+        }
+        return isEqual;
+    }
+
+    public void print() {
+        System.out.println("***********");
+
+        for (int i = 0; i < this.n; i ++) {
+            System.out.println();
+            for (int j = 0; j < this.n; j ++) {
+               System.out.print(this.stateArr[i][j]);
+            }
+        }
+        System.out.println();
+        System.out.println("***********");
     }
 }

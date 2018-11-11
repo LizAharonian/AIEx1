@@ -59,7 +59,10 @@ public class Main {
 
         BoardState root = new BoardState(null, n , null, stateArr);
         AlgoFactory algoFactory = new AlgoFactory(algorithm);
-        algoFactory.getAlgorithm().operateAlgo(root);
+        IAlgo algo = algoFactory.getAlgorithm();
+        algo.operateAlgo(root);
+        String path = algo.getPath();
+        System.out.println(path);
 
 
     }
