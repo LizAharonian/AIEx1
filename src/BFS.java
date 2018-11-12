@@ -1,10 +1,17 @@
 import java.util.*;
 
 /**
- * Created by lizah on 11/11/2018.
+ * BFS class.
+ * implement of BFS algorithm and extends the abstract class.
  */
 public class BFS extends AbstractAlgo {
+    //member
     private Queue<BoardState> openList;
+    /**
+     * operateAlgo function.
+     * operate the search algo.
+     * @param root - root srate.
+     */
     @Override
     public void operateAlgo(BoardState root) {
         super.current = root;
@@ -14,48 +21,26 @@ public class BFS extends AbstractAlgo {
             current = openList.remove();
             super.closeList.add(current);
             current.print();
-
+            //check if current state is goal
             if (current.isGoal()) {
+                super.goal = current;
                 break;
             } else {
                 List<CommonEnumerations.Operators> operators = current.getValidSuccessorsOperations();
                 for (CommonEnumerations.Operators op: operators) {
-                    BoardState successor = new BoardState(super.current,super.current.getSize(),op,null);
+                    BoardState successor = new BoardState(super.current, super.current.getSize(), op, null);
                     System.out.println("ssssss");
                     successor.print();
-                    if (!isInCloseList(successor) && !isInOpenList(successor)) {
-                        openList.add(successor);
-                   }
+                    openList.add(successor);
                 }
             }
         }
     }
 
-    private boolean isInCloseList(BoardState successor) {
-        boolean isExistInCloseList = false;
-        for (BoardState item:super.closeList) {
-            if(successor.isEqual(item)) {
-                isExistInCloseList = true;
-                break;
-            }
-        }
-        return isExistInCloseList;
-    }
-
-    private boolean isInOpenList(BoardState successor) {
-        boolean isExistInOpenList = false;
-        for (BoardState item:this.openList) {
-            if(successor.isEqual(item)) {
-                isExistInOpenList = true;
-                break;
-            }
-        }
-        return isExistInOpenList;
-    }
-
-
-
-
+    /**
+     * getSpacificCharacteristic function.
+     * @return specified cost.
+     */
     @Override
     public int getSpacificCharacteristic() {
         return 0;

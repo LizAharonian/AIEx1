@@ -1,8 +1,15 @@
 /**
- * Created by lizah on 11/11/2018.
+ * AlgoFactory class.
+ * gets enum and return algorithm.
  */
 public class AlgoFactory {
+    //member.
     IAlgo algorithm;
+
+    /**
+     * ctr.
+     * @param algo - get specified enum of algo.
+     */
     public AlgoFactory(CommonEnumerations.Algo algo) {
         switch (algo) {
             case IDS:
@@ -17,6 +24,10 @@ public class AlgoFactory {
         }
     }
 
+    /**
+     * getAlgorithm function.
+     * @return the created algo.
+     */
     public IAlgo getAlgorithm() {
         return algorithm;
     }

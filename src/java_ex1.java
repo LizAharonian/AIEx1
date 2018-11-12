@@ -1,15 +1,18 @@
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Created by lizah on 09/11/2018.
+ * java_ex1 class.
+ * contains the main method which runs the program.
  */
-public class Main {
+public class java_ex1 {
+    /**
+     * main function.
+     * runs the program.
+     * @param args
+     */
 
     public static void main(String [ ] args)
     {
@@ -36,9 +39,8 @@ public class Main {
                 }  else if (lineNum == 1) {
                     n = Integer.valueOf(line.trim());
                 } else if (lineNum == 2) {
-                    String[] splittedArr = line.trim().split("-");
                     stateArr = new int[n][n];
-                    List<Integer> numbersForInitialize = Arrays.stream(line.split("-"))
+                    List<Integer> numbersForInitialize = Arrays.stream(line.trim().split("-"))
                             .map(Integer::parseInt)
                             .collect(Collectors.toList());
                     for (int i = 0; i < n; i++) {
@@ -47,23 +49,40 @@ public class Main {
                         }
                     }
                 }
-
                 lineNum++;
-
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
-
+        //create root
         BoardState root = new BoardState(null, n , null, stateArr);
+        //create algo
         AlgoFactory algoFactory = new AlgoFactory(algorithm);
         IAlgo algo = algoFactory.getAlgorithm();
         algo.operateAlgo(root);
-        String path = algo.getPath();
-        System.out.println(path);
+        try {
+            //write to output file
+            writeOutputFile(args[1], algo.getPath(), algo.getNumOfClosedListMembers(), algo.getSpacificCharacteristic());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
-
+    /**
+     * writeOutputFile function.
+     * @param outputFileName - name of output file.
+     * @param path - path to goal state.
+     * @param numOfClosedList - num of states in closed list.
+     * @param specificCharacteristic - cost of each algo.
+     * @throws IOException
+     */
+    public static void writeOutputFile(String outputFileName, String path, int numOfClosedList, int specificCharacteristic) throws IOException {
+        File fout = new File(outputFileName);
+        FileOutputStream fos = new FileOutputStream(fout);
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));
+        bw.write(path + " " + String.valueOf(numOfClosedList) + " " +String.valueOf(specificCharacteristic));
+        bw.close();
     }
 }
