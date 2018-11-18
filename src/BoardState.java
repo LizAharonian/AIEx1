@@ -52,11 +52,11 @@ public class BoardState {
             for (int j = 0; j < n; j++) {
                 int val = this.stateArr[i][j];
                 if (val!=0) {
-                    rightPlaceCol= ((val % this.n) + this.n - 1) % this.n;
+                    rightPlaceCol = ((val % this.n) + this.n - 1) % this.n;
                     rightPlaceRow = (int)(Math.ceil((float)val/this.n)) - 1;
                 } else {
-                    rightPlaceRow = this.n - 1;
-                    rightPlaceCol = this.n - 1;
+                    //don't compute huristic of the empty box
+                    continue;
                 }
                 huristic += Math.abs(i - rightPlaceRow) + Math.abs(j - rightPlaceCol);
             }
@@ -65,7 +65,7 @@ public class BoardState {
     }
 
     /**
-     * getDepth function/
+     * getDepth function.
      * @return depth of the state.
      */
     public int getDepth() {

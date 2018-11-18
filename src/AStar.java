@@ -27,7 +27,7 @@ public class AStar extends AbstractAlgo {
         while (!openList.isEmpty()) {
             current = openList.remove();
             super.closeList.add(current);
-            //current.print();
+            current.print();
             if (current.isGoal()) {
                 super.goal = current;
                 current.isGoal();
@@ -50,13 +50,6 @@ public class AStar extends AbstractAlgo {
      */
     @Override
     public int getSpacificCharacteristic() {
-        int val = 0;
-        BoardState temp;
-        temp = super.goal;
-        while (temp!=null) {
-            val += temp.getDepth() + temp.getHuristic();
-            temp = temp.getParent();
-        }
-        return val;
+        return this.goal.getDepth();
     }
 }
